@@ -1,0 +1,523 @@
+{
+    "info": {
+        "_postman_id": "b5e7b5e7-b5e7-b5e7-b5e7-b5e7b5e7b5e7",
+        "name": "Admin API",
+        "description": "Complete admin API collection including auth, stores, zones, banners, and advertisements",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Authentication",
+            "item": [
+                {
+                    "name": "Register",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"Admin@123\",\n    \"phone\": \"+1234567890\",\n    \"role\": \"admin\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:5000/api/auth/register",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "auth", "register"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"Admin@123\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:5000/api/auth/login",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "auth", "login"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Stores",
+            "item": [
+                {
+                    "name": "Create Store",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": {\n        \"en\": \"Sample Store\",\n        \"ar\": \"متجر عينة\"\n    },\n    \"description\": {\n        \"en\": \"Sample store description\",\n        \"ar\": \"وصف المتجر العينة\"\n    },\n    \"address\": {\n        \"street\": \"123 Main St\",\n        \"city\": \"Sample City\",\n        \"state\": \"Sample State\",\n        \"country\": \"Sample Country\",\n        \"zipCode\": \"12345\",\n        \"coordinates\": {\n            \"latitude\": 12.34567,\n            \"longitude\": 45.67890\n        }\n    },\n    \"contactInfo\": {\n        \"phone\": \"+1234567890\",\n        \"email\": \"store@example.com\"\n    },\n    \"zone\": \"{{zoneId}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "https://localhost:5000/api/foodstores",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "foodstores"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Stores",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://localhost:5000/api/foodstores?page=1&limit=10&zone={{zoneId}}&status=active",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "foodstores"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "zone",
+                                    "value": "{{zoneId}}"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Zones",
+            "item": [
+                {
+                    "name": "Create Zone",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": {\n        \"en\": \"Sample Zone\",\n        \"ar\": \"منطقة عينة\"\n    },\n    \"coordinates\": [\n        {\n            \"latitude\": 12.34567,\n            \"longitude\": 45.67890\n        },\n        {\n            \"latitude\": 12.34568,\n            \"longitude\": 45.67891\n        },\n        {\n            \"latitude\": 12.34569,\n            \"longitude\": 45.67892\n        }\n    ],\n    \"status\": \"active\"\n}"
+                        },
+                        "url": {
+                            "raw": "https://localhost:5000/api/zones",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "zones"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Zones",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://localhost:5000/api/zones?page=1&limit=10&status=active",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "zones"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Banners",
+            "item": [
+                {
+                    "name": "Create Banner",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Summer Sale Banner\",\n    \"link\": \"https://example.com/summer-sale\",\n    \"image\": \"data:image/jpeg;base64,/9j/4AAQSkZJRg...\",\n    \"store\": \"{{storeId}}\",\n    \"zone\": \"{{zoneId}}\",\n    \"isVisible\": true\n}"
+                        },
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/banners",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "banners"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Banners",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/banners?page=1&limit=10&store={{storeId}}&zone={{zoneId}}&isVisible=true",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "banners"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "store",
+                                    "value": "{{storeId}}"
+                                },
+                                {
+                                    "key": "zone",
+                                    "value": "{{zoneId}}"
+                                },
+                                {
+                                    "key": "isVisible",
+                                    "value": "true"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Banner",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Updated Summer Sale Banner\",\n    \"link\": \"https://example.com/updated-summer-sale\",\n    \"image\": \"data:image/jpeg;base64,/9j/4AAQSkZJRg...\",\n    \"isVisible\": false\n}"
+                        },
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/banners/{{bannerId}}",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "banners", "{{bannerId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Banner",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/banners/{{bannerId}}",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "banners", "{{bannerId}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Advertisements",
+            "item": [
+                {
+                    "name": "Create Advertisement",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": {\n        \"en\": \"New Product Launch\",\n        \"ar\": \"إطلاق منتج جديد\"\n    },\n    \"description\": {\n        \"en\": \"Exciting new product launch with special offers\",\n        \"ar\": \"إطلاق منتج جديد مثير مع عروض خاصة\"\n    },\n    \"store\": \"{{storeId}}\",\n    \"type\": \"popup\",\n    \"media\": \"data:image/jpeg;base64,/9j/4AAQSkZJRg...\",\n    \"priority\": 1,\n    \"startDate\": \"2024-02-01T00:00:00.000Z\",\n    \"endDate\": \"2024-03-01T00:00:00.000Z\",\n    \"targetAudience\": {\n        \"ageRange\": {\n            \"min\": 18,\n            \"max\": 45\n        },\n        \"gender\": \"all\",\n        \"zones\": [\"{{zoneId}}\"]\n    }\n}"
+                        },
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/advertisements",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "advertisements"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Advertisements",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/advertisements?page=1&limit=10&store={{storeId}}&status=active&type=popup&sortField=startDate&sortOrder=desc",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "advertisements"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "store",
+                                    "value": "{{storeId}}"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active"
+                                },
+                                {
+                                    "key": "type",
+                                    "value": "popup"
+                                },
+                                {
+                                    "key": "sortField",
+                                    "value": "startDate"
+                                },
+                                {
+                                    "key": "sortOrder",
+                                    "value": "desc"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Advertisement",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": {\n        \"en\": \"Updated Product Launch\",\n        \"ar\": \"تحديث إطلاق المنتج\"\n    },\n    \"description\": {\n        \"en\": \"Updated product launch details\",\n        \"ar\": \"تفاصيل إطلاق المنتج المحدثة\"\n    },\n    \"type\": \"banner\",\n    \"media\": \"data:image/jpeg;base64,/9j/4AAQSkZJRg...\",\n    \"priority\": 2,\n    \"endDate\": \"2024-03-15T00:00:00.000Z\"\n}"
+                        },
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/advertisements/{{advertisementId}}",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "advertisements", "{{advertisementId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Advertisement",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/advertisements/{{advertisementId}}",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "advertisements", "{{advertisementId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Track Advertisement Impression",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/advertisements/{{advertisementId}}/impression",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "advertisements", "{{advertisementId}}", "impression"]
+                        }
+                    }
+                },
+                {
+                    "name": "Track Advertisement Click",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://localhost:5000/api/bannerandad/advertisements/{{advertisementId}}/click",
+                            "protocol": "https",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "bannerandad", "advertisements", "{{advertisementId}}", "click"]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "token",
+            "value": "your_jwt_token_here"
+        },
+        {
+            "key": "storeId",
+            "value": "your_store_id_here"
+        },
+        {
+            "key": "zoneId",
+            "value": "your_zone_id_here"
+        },
+        {
+            "key": "bannerId",
+            "value": "your_banner_id_here"
+        },
+        {
+            "key": "advertisementId",
+            "value": "your_advertisement_id_here"
+        }
+    ]
+} 
